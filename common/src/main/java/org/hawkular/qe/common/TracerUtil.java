@@ -20,6 +20,7 @@ import io.jaegertracing.reporters.CompositeReporter;
 import io.jaegertracing.reporters.LoggingReporter;
 import io.jaegertracing.reporters.RemoteReporter;
 import io.jaegertracing.reporters.Reporter;
+import io.jaegertracing.samplers.ConstSampler;
 import io.jaegertracing.samplers.ProbabilisticSampler;
 import io.jaegertracing.samplers.Sampler;
 import io.jaegertracing.senders.HttpSender;
@@ -83,7 +84,7 @@ public class TracerUtil {
                 compositeReporter = new CompositeReporter(remoteReporter);
             }
 
-            Sampler sampler = new ProbabilisticSampler(JAEGER_SAMPLING_RATE);
+            Sampler sampler = new ConstSampler(true);
             tracer = new io.jaegertracing.Tracer.Builder(TEST_SERVICE_NAME)
                     .withReporter(compositeReporter)
                     .withSampler(sampler)
